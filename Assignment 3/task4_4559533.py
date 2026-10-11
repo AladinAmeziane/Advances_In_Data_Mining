@@ -76,7 +76,7 @@ if __name__ == "__main__":
     X, color = load_data()
 
     # TO DO: Fill in the appropriate values for n_components, perplexity, max_iter, and init
-    X_tsne_2d = apply_tsne(X, n_components=2, perplexity=30, max_iter=500, init="pca", random_state=2024)
+    X_tsne_2d = apply_tsne(X, n_components=2, perplexity=30, max_iter=1000, init="pca", random_state=2024)
 
     plot_tsne_projection(X_tsne_2d, color)
     print(return_identified_letter())
