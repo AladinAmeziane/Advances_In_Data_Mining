@@ -46,6 +46,8 @@ def standardize_data(data):
     array: Scaled dataset.
     """
     # TO DO: Instantiate StandardScaler and use fit_transform to scale the data
+    datascaler = StandardScaler()
+    data_scaled = datascaler.fit_transform(data)
 
 
 
@@ -65,7 +67,8 @@ def apply_pca(data_scaled, n_components):
     PCA object: The PCA object used.
     """
     # TO DO: Instantiate PCA with n_components and apply PCA transformation
-
+    pca = PCA(n_components=n_components)
+    data_pca = pca.fit_transform(data_scaled)
 
 
     return data_pca, pca
@@ -80,6 +83,13 @@ def plot_original_data(data, labels):
     labels (array): Cluster labels for each data point, where each label indicates which cluster the point belongs to.
     """
     # TO DO: Use scatter plot to visualize the original data in 3D space
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    sc = ax.scatter(data[:, 0], data[:, 1], data[:, 2], c=labels)
+    ax.set_xlabel("Feature X"); ax.set_ylabel("Feature Y"); ax.set_zlabel("Feature Z")
+    ax.legend(*sc.legend_elements(), title="Cluster")
+    plt.show()
+    return plt.show()
 
 # Function to plot the XY projection
 def plot_xy_projection(data, labels):
@@ -91,6 +101,12 @@ def plot_xy_projection(data, labels):
     labels (array): Cluster labels for each data point.
     """
     # TO DO: Implement the function to plot the XY projection of the dataset
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(data[:, 0], data[:, 1], c=labels)
+    ax.set_xlabel("Feature X"); ax.set_ylabel("Feature Y")
+    ax.legend(*sc.legend_elements(), title="Cluster")
+    plt.show()
 
 # Function to plot the XZ projection
 def plot_xz_projection(data, labels):
@@ -102,6 +118,12 @@ def plot_xz_projection(data, labels):
     labels (array): Cluster labels for each data point.
     """
     # TO DO: Implement the function to plot the XY projection of the dataset
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(data[:, 0], data[:, 2], c=labels)
+    ax.set_xlabel("Feature X"); ax.set_ylabel("Feature Z")
+    ax.legend(*sc.legend_elements(), title="Cluster")
+    plt.show()
 
 # Function to plot the YZ projection
 def plot_yz_projection(data, labels):
@@ -113,6 +135,12 @@ def plot_yz_projection(data, labels):
     labels (array): Cluster labels for each data point.
     """
     # TO DO: Implement the function to plot the XY projection of the dataset
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(data[:, 1], data[:, 2], c=labels)
+    ax.set_xlabel("Feature Y"); ax.set_ylabel("Feature Z")
+    ax.legend(*sc.legend_elements(), title="Cluster")
+    plt.show()
 
 # Function to plot the PCA results
 def plot_pca_results(data_pca, labels):
@@ -124,6 +152,13 @@ def plot_pca_results(data_pca, labels):
     labels (array): Cluster labels for each data point.
     """
     # TO DO: Use scatter plot to visualize the 2D projection from PCA
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(data_pca[:, 0], data_pca[:, 1], c=labels)
+    ax.set_xlabel("Principal component 1"); ax.set_ylabel("Principal component 2")
+    ax.legend(*sc.legend_elements(), title="Cluster")
+    plt.show()
+    return plt.show()
 
 
 if __name__ == "__main__":
@@ -140,6 +175,6 @@ if __name__ == "__main__":
     data_scaled = standardize_data(data)
 
     # TO DO: Fill in appropriate value for n_components
-    data_pca, pca = apply_pca(data_scaled, n_components=_____)  # Apply PCA to the dataset
+    data_pca, pca = apply_pca(data_scaled, n_components=2)  # Apply PCA to the dataset
     
     plot_pca_results(data_pca, labels)   # Plot PCA results

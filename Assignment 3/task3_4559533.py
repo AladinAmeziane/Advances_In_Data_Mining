@@ -37,6 +37,8 @@ def apply_pca(X, n_components, random_state=2024):
     array: Transformed data with PCA applied.
     """
     # TO DO: Create a pipeline to apply StandardScaler and PCA
+    pipeline = make_pipeline(StandardScaler(), PCA(n_components=n_components, random_state=random_state))
+    X_pca = pipeline.fit_transform(X)
 
 
 
@@ -52,7 +54,13 @@ def plot_3d_data(X, color):
     color (array): The color labels for the points.
     """
     # TO DO: Use scatter plot to visualize the original data in 3D space
-
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    sc = ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=color)
+    ax.set_xlabel("Feature X"); ax.set_ylabel("Feature Y"); ax.set_zlabel("Feature Z")
+    ax.legend(*sc.legend_elements(), title="Color")
+    plt.show()
+    return plt.show()
 
 
 
@@ -67,7 +75,12 @@ def plot_xz_projection(X, color):
     color (array): The color labels for the points.
     """
     # TO DO: Use scatter plot to visualize the XZ projection
-
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(X[:, 0], X[:, 2], c=color)
+    ax.set_xlabel("Feature X"); ax.set_ylabel("Feature Z")
+    ax.legend(*sc.legend_elements(), title="Color")
+    plt.show()
 
 
 
@@ -82,7 +95,13 @@ def plot_pca_projection(X_pca, color):
     color (array): The color labels for the points.
     """
     # TO DO: Use scatter plot to visualize the 2D projection from PCA
-
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(X_pca[:, 0], X_pca[:, 1], c=color)
+    ax.set_xlabel("Principal component 1"); ax.set_ylabel("Principal component 2")
+    ax.legend(*sc.legend_elements(), title="Color")
+    plt.show()
+    return plt.show()
 
 
 
@@ -92,7 +111,7 @@ if __name__ == "__main__":
     X, color = generate_swiss_roll(n_samples=1500, noise=0.1, random_state=2024)
 
     #TO DO: Fill in appropriate value for n_components
-    X_pca = apply_pca(X, n_components=_____, random_state=2024) # Apply PCA
+    X_pca = apply_pca(X, n_components=2, random_state=2024) # Apply PCA
 
     plot_3d_data(X, color)              # Visualize the original 3D dataset
     plot_xz_projection(X, color)        # Visualize the XZ projection

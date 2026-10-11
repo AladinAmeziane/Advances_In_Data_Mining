@@ -14,6 +14,8 @@ def load_data():
     tuple: The data (X) and color labels (color)
     """
     # TO DO: Load dataset from files
+    X = np.load("swiss_roll.npy")
+    color = np.load("color.npy")
 
 
 
@@ -33,6 +35,8 @@ def apply_tsne(X, n_components, perplexity, max_iter, init, random_state=2024):
     array: The t-SNE transformed dataset with 2 components.
     """
     # TO DO: Create a pipeline to apply StandardScaler and t-SNE
+    pipeline = make_pipeline(StandardScaler(), TSNE(n_components=n_components, perplexity=perplexity, max_iter=max_iter, init= init, random_state= random_state))
+    X_tsne_2d = pipeline.fit_transform(X)
 
 
 
@@ -48,7 +52,13 @@ def plot_tsne_projection(X_tsne_2d, color):
     color (array): The color labels for the points.
     """
     # TO DO: Use scatter plot to visualize the 2D projection from t-SNE
-
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    sc = ax.scatter(X_tsne_2d[:, 0], X_tsne_2d[:, 1], c=color)
+    ax.set_xlabel("Dimension 1"); ax.set_ylabel("Dimension 2")
+    ax.legend(*sc.legend_elements(), title="Color")
+    plt.show()
+    return plt.show()
 
 
 
@@ -59,14 +69,14 @@ def return_identified_letter():
     """
     # TO DO: If you succeed in unfolding the dataset with t-SNE, you will see a recognizable letter (between A-Z) in the plot.
     # Identify and return the letter. Example: return 'A'.
-    return _____.upper()
+    return "o".upper()
 
 
 if __name__ == "__main__":
     X, color = load_data()
 
     # TO DO: Fill in the appropriate values for n_components, perplexity, max_iter, and init
-    X_tsne_2d = apply_tsne(X, n_components=_____, perplexity=_____, max_iter=_____, init=_____, random_state=2024)
+    X_tsne_2d = apply_tsne(X, n_components=2, perplexity=30, max_iter=1000, init="pca", random_state=2024)
 
     plot_tsne_projection(X_tsne_2d, color)
     print(return_identified_letter())
