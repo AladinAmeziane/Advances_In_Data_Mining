@@ -36,7 +36,7 @@ sd.qualityMeasure = 'CORTANA_QUALITY'
 sd.qualityMeasureMinimum = 0.1
 
 # BEGIN IMPLEMENTATION
-
+sd.numericStrategy = 'NUMERIC_BEST'
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
@@ -51,7 +51,9 @@ sd = pysubdisc.singleNominalTarget(data, 'target', 'gr50K')
 sd.qualityMeasure = 'CORTANA_QUALITY'
 
 # BEGIN IMPLEMENTATION
-
+sd.numericStrategy = 'NUMERIC_BEST'
+sd.searchDepth = 2
+sd.qualityMeasureMinimum = 0.25
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
@@ -67,7 +69,10 @@ sd_no_filter = pysubdisc.singleNominalTarget(data, 'target', 'gr50K')
 sd_no_filter.qualityMeasure = 'CORTANA_QUALITY'
 
 # BEGIN IMPLEMENTATION
-
+sd_no_filter.numericStrategy = 'NUMERIC_BEST'
+sd_no_filter.searchDepth = 2
+sd_no_filter.qualityMeasureMinimum = 0.25
+sd_no_filter.filterSubgroups = False
 # END IMPLEMENTATION
 
 sd_no_filter.run(verbose=False)
@@ -81,6 +86,9 @@ print("Subgroup count with filtering turned OFF: ", len(sd_no_filter.asDataFrame
 
 # BEGIN IMPLEMENTATION
 
+patternTeam, grouping = sd_no_filter.getPatternTeam(3, returnGrouping=True)
+print(patternTeam)
+
 # END IMPLEMENTATION
 
 print('\n\n******* Section 5 *******\n')
@@ -89,7 +97,10 @@ print('\n\n******* Section 5 *******\n')
 sd = pysubdisc.singleNominalTarget(data, 'target', 'gr50K')
 
 # BEGIN IMPLEMENTATION
-
+sd.numericStrategy = 'NUMERIC_BEST'
+sd.searchDepth = 2
+sd.qualityMeasure = "RELATIVE_LIFT"
+sd.qualityMeasureMinimum = 0
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
@@ -103,7 +114,12 @@ print('\n\n******* Section 6 *******\n')
 # SECTION 6
 
 # BEGIN IMPLEMENTATION
-
+sd = pysubdisc.singleNominalTarget(data, 'target', 'gr50K')
+sd.numericStrategy = 'NUMERIC_BEST'
+sd.searchDepth = 2
+sd.qualityMeasure = "RELATIVE_LIFT"
+sd.qualityMeasureMinimum = 3
+sd.minimumCoverage = 5
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
@@ -116,7 +132,12 @@ print('\n\n******* Section 7 *******\n')
 
 # SECTION 7
 # BEGIN IMPLEMENTATION
-sd = ...
+sd = pysubdisc.singleNumericTarget(data, 'age')
+sd.numericStrategy = 'NUMERIC_BEST'
+sd.searchDepth = 2
+sd.qualityMeasure = "Z_SCORE"
+sd.qualityMeasureMinimum = 0
+sd.minimumCoverage = 100
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
@@ -132,7 +153,12 @@ print('\n\n******* Section 8 *******\n')
 # run 100 swap-randomised SD runs in order to determine the minimum required quality to reach a significance level alpha = 0.05
 
 # BEGIN IMPLEMENTATION
-
+sd = pysubdisc.singleNumericTarget(data, 'age')
+sd.numericStrategy = 'NUMERIC_BEST'
+sd.searchDepth = 2
+sd.qualityMeasure = "Z_SCORE"
+sd.minimumCoverage = 100
+threshold = sd.computeThreshold(significanceLevel=0.05, method='SWAP_RANDOMIZATION', amount=100, setAsMinimum=True)
 # END IMPLEMENTATION
 
 sd.run(verbose=False)
